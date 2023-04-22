@@ -9,7 +9,7 @@ namespace Observer
         public List<ASubscriber>? SubScribers { get; set; }
 
         public abstract void AddSubscriber(ASubscriber? subscriber);
-        public async void AsyncStartObserve()
+        public void AsyncStartObserve()
         {
             Observe = Task.Run(() => StartObserve());
         }

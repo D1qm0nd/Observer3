@@ -8,8 +8,10 @@ namespace Proj
         public static void Main() 
         {
             Observer3 observer = new Observer3();
-            var sub = new Subscriber(CheckEvent, Notify);
-            observer.AddSubscriber(sub);
+            observer.AddSubscriber(new Subscriber(CheckEvent1, Notify1));
+            observer.AddSubscriber(new Subscriber(CheckEvent2, Notify2));
+            observer.AddSubscriber(new Subscriber(CheckEvent3, Notify3));
+
             observer.AsyncStartObserve();
             while (a+b != 555)
             {
@@ -24,16 +26,40 @@ namespace Proj
             }
             observer.isObserving = false;
             GC.Collect();
+            Console.WriteLine("Было введено 555, программа завершилась успешно!");
         }
 
 
-        public static bool CheckEvent()
+
+        public static bool CheckEvent1()
         {
             return (a + b < 0);
         }
-        public static void Notify()
+
+        public static bool CheckEvent2()
         {
-            Console.WriteLine("Произошло событие!");
+            return ((a + b > 0) && (a + b < 100));
         }
+
+        public static bool CheckEvent3()
+        {
+            return (a + b >= 100);
+        }
+
+        public static void Notify1()
+        {
+            Console.WriteLine("Событие sum < 0");
+        }
+
+        public static void Notify2()
+        {
+            Console.WriteLine("Событие 0 > sum < 100");
+        }
+
+        public static void Notify3()
+        {
+            Console.WriteLine("Событие sum >= 100");
+        }
+
     }
 }
